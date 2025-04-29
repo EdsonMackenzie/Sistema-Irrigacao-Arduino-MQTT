@@ -28,5 +28,4 @@ O código principal está no arquivo `main.ino`.
 *Todos os membros aparecem. Vídeo com 5 a 7 minutos.*
 
 ## Autores
-- Fulano da Silva – RA: 0000000
-- Beltrano de Souza – RA: 1111111
+- Edson Gustavo Silva Pereira – RA: 10408686
