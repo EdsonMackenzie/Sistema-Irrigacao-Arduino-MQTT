@@ -27,7 +27,7 @@ Este projeto simula um sistema de irrigação inteligente usando ESP32, MicroPyt
 Veja o arquivo `main.py` neste repositório.
 
 ## Demonstração em Vídeo
-[🔗 Assista no YouTube](https://youtube.com/seulink)
+[🔗 Assista no YouTube](https://youtu.be/Mx8yYbpQopg?si=bhWTE6jdw4mN8kx-)
 
 ## Autores
 - Edson Gustavo Silva Pereira – RA: 10408686
