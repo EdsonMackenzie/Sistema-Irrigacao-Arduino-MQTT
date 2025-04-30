@@ -27,8 +27,9 @@ Este projeto simula um sistema de irrigação inteligente usando ESP32, MicroPyt
 Veja o arquivo `main.py` neste repositório.
 
 ## Simulação no Wokwi
-🔗 Acesse a simulação do circuito diretamente no Wokwi:  
-[https://wokwi.com/projects/seulink]([https://wokwi.com/projects/seulink](https://wokwi.com/projects/429625709486787585))
+
+🔗 Acesse a simulação completa do circuito diretamente no Wokwi:  
+[[https://wokwi.com/projects/429740661783478801](https://wokwi.com/projects/429625709486787585)]([https://wokwi.com/projects/429740661783478801](https://wokwi.com/projects/429625709486787585))
 
 ## Demonstração em Vídeo
 [🔗 Assista no YouTube](https://youtu.be/Mx8yYbpQopg?si=bhWTE6jdw4mN8kx-)
