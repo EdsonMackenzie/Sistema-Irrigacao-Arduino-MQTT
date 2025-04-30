@@ -1,26 +1,32 @@
-#include <SoftwareSerial.h>
-#define sensor A0
-#define rele 7
+from machine import Pin, ADC
+from time import sleep
+import neopixel
 
-int leitura = 0;
+# Pinos do ESP32
+sensor = ADC(Pin(36))           # Potenciômetro simula sensor de umidade
+sensor.atten(ADC.ATTN_11DB)     # Para leitura até 3.3V (0-4095)
 
-void setup() {
-  pinMode(sensor, INPUT);
-  pinMode(rele, OUTPUT);
-  digitalWrite(rele, LOW);
-  Serial.begin(9600); // Monitoramento local
-}
+rele = Pin(23, Pin.OUT)         # Relé no GPIO23
+np = neopixel.NeoPixel(Pin(22), 1)  # NeoPixel no GPIO22
 
-void loop() {
-  leitura = analogRead(sensor);
-  Serial.print("Umidade: ");
-  Serial.println(leitura);
+# Limite para definir solo seco (abaixo) ou úmido (acima)
+LIMITE_UMIDADE = 2000  # ajuste conforme necessário
 
-  if (leitura < 400) { // Umidade baixa
-    digitalWrite(rele, HIGH); // Liga bomba
-  } else {
-    digitalWrite(rele, LOW); // Desliga bomba
-  }
+while True:
+    umidade = sensor.read()
+    print("\n=============================")
+    print(f"Umidade lida: {umidade}")
 
-  delay(2000);
-}
+    if umidade < LIMITE_UMIDADE:
+        print("Status: SOLO SECO")
+        print("Bomba: LIGADA")
+        rele.value(1)  # Liga o relé
+        np[0] = (255, 0, 0)  # Vermelho
+    else:
+        print("Status: SOLO ÚMIDO")
+        print("Bomba: DESLIGADA")
+        rele.value(0)  # Desliga o relé
+        np[0] = (0, 255, 0)  # Verde
+
+    np.write()
+    sleep(2)
