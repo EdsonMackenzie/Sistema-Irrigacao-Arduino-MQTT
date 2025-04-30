@@ -1,31 +1,33 @@
-# Sistema de Irrigação Inteligente com Arduino e MQTT
+# Sistema de Irrigação Inteligente com ESP32 e MQTT (Simulado)
 
-Este projeto consiste em um sistema de irrigação automático usando sensor de umidade do solo, bomba d'água, Arduino Uno, módulo relé e conexão com a internet via ESP8266 e protocolo MQTT.
+Este projeto simula um sistema de irrigação inteligente usando ESP32, MicroPython, um sensor de umidade (potenciômetro), um LED NeoPixel e um módulo relé que representa uma bomba d'água.
 
 ## Funcionalidade
-- Lê a umidade do solo com o sensor YL-69.
-- Aciona a bomba d’água automaticamente com o relé.
-- Envia os dados para a nuvem via MQTT.
-- Monitoramento remoto por plataformas como Node-RED.
+- Lê a umidade do solo simulada com um potenciômetro.
+- Aciona automaticamente a bomba (relé) quando o solo está seco.
+- Um LED NeoPixel indica o estado da irrigação:
+  - Vermelho = bomba ligada (solo seco)
+  - Verde = bomba desligada (solo úmido)
+- Dados são exibidos no terminal do Wokwi.
+- Código escrito em MicroPython e simulado na plataforma Wokwi.
 
-## Materiais
-- Arduino Uno
-- Sensor de umidade YL-69
-- Módulo relé 5V
-- Bomba d'água
-- Módulo Wi-Fi ESP8266
-- Jumpers
-- Fonte de 5V
+## Componentes Usados (Simulação Wokwi)
+- ESP32 (placa principal)
+- Potenciômetro (simula sensor de umidade)
+- Módulo Relé (simula bomba)
+- LED NeoPixel
+- Código em MicroPython (`main.py`)
 
-## Circuito
-Veja o diagrama no arquivo `/img/Circuito_Fritzing_Sistema_Irrigacao.png`.
+## Circuito (Wokwi)
+- Potenciômetro → A0 (GPIO36), GND, 5V
+- NeoPixel → DIN: GPIO22, VCC: 5V, GND
+- Relé → Sinal: GPIO23, VCC: 5V, GND
 
 ## Código
-O código principal está no arquivo `main.ino`.
+Veja o arquivo `main.py` neste repositório.
 
-## Vídeo Demonstrativo
-[Assista no YouTube](https://youtube.com/link-aqui)  
-*Todos os membros aparecem. Vídeo com 5 a 7 minutos.*
+## Demonstração em Vídeo
+[🔗 Assista no YouTube](https://youtube.com/seulink)
 
 ## Autores
 - Edson Gustavo Silva Pereira – RA: 10408686
