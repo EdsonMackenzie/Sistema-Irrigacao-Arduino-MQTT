@@ -1,32 +1,34 @@
-from machine import Pin, ADC
-from time import sleep
-import neopixel
+# Sistema de Irrigação Inteligente com ESP32 e MQTT (Simulado)
 
-# Pinos do ESP32
-sensor = ADC(Pin(36))           # Potenciômetro simula sensor de umidade
-sensor.atten(ADC.ATTN_11DB)     # Para leitura até 3.3V (0-4095)
+Este projeto simula um sistema de irrigação inteligente usando ESP32, MicroPython, um sensor de umidade (potenciômetro), um LED NeoPixel e um módulo relé que representa uma bomba d'água.
 
-rele = Pin(23, Pin.OUT)         # Relé no GPIO23
-np = neopixel.NeoPixel(Pin(22), 1)  # NeoPixel no GPIO22
+## Funcionalidade
+- Lê a umidade do solo simulada com um potenciômetro.
+- Aciona automaticamente a bomba (relé) quando o solo está seco.
+- Um LED NeoPixel indica o estado da irrigação:
+  - Vermelho = bomba ligada (solo seco)
+  - Verde = bomba desligada (solo úmido)
+- Dados são exibidos no terminal do Wokwi.
+- Código escrito em MicroPython e simulado na plataforma Wokwi.
 
-# Limite para definir solo seco (abaixo) ou úmido (acima)
-LIMITE_UMIDADE = 2000  # ajuste conforme necessário
+## Componentes Usados (Simulação Wokwi)
+- ESP32 (placa principal)
+- Potenciômetro (simula sensor de umidade)
+- Módulo Relé (simula bomba)
+- LED NeoPixel
+- Código em MicroPython (`main.py`)
 
-while True:
-    umidade = sensor.read()
-    print("\n=============================")
-    print(f"Umidade lida: {umidade}")
+## Circuito (Wokwi)
+- Potenciômetro → A0 (GPIO36), GND, 5V
+- NeoPixel → DIN: GPIO22, VCC: 5V, GND
+- Relé → Sinal: GPIO23, VCC: 5V, GND
 
-    if umidade < LIMITE_UMIDADE:
-        print("Status: SOLO SECO")
-        print("Bomba: LIGADA")
-        rele.value(1)  # Liga o relé
-        np[0] = (255, 0, 0)  # Vermelho
-    else:
-        print("Status: SOLO ÚMIDO")
-        print("Bomba: DESLIGADA")
-        rele.value(0)  # Desliga o relé
-        np[0] = (0, 255, 0)  # Verde
+## Código
+Veja o arquivo `main.py` neste repositório.
 
-    np.write()
-    sleep(2)
+## Demonstração em Vídeo
+[🔗 Assista no YouTube](https://youtube.com/seulink)
+
+## Autores
+- Fulano da Silva – RA: 123456
+- Ciclano de Souza – RA: 654321
