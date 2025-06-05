@@ -67,6 +67,8 @@ O código atualizado com conexão Wi-Fi e MQTT está no arquivo **`main.py`** de
 
 👉 [Assista no YouTube](https://youtu.be/Mx8yYbpQopg?si=bhWTE6jdw4mN8kx-)
 
+Video complementar mostrando conexão Wi-fi com MQTT: https://youtu.be/mo1pjNt79uo?si=n7mWeMebmN-SjCAB
+
 ---
 
 ## 🧰 Lista de Materiais
