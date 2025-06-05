@@ -1,32 +1,56 @@
+import network
+import time
+from umqtt.simple import MQTTClient
 from machine import Pin, ADC
-from time import sleep
-import neopixel
 
-# Pinos do ESP32
-sensor = ADC(Pin(36))           # Potenciômetro simula sensor de umidade
-sensor.atten(ADC.ATTN_11DB)     # Para leitura até 3.3V (0-4095)
+ ssid = 'Wokwi-GUEST'
+password = ''
 
-rele = Pin(23, Pin.OUT)         # Relé no GPIO23
-np = neopixel.NeoPixel(Pin(22), 1)  # NeoPixel no GPIO22
+mqtt_server = 'broker.hivemq.com'
+mqtt_port = 1883
+client_id = 'esp32-irrigacao-edson'
+topic_umidade = b'edson/umidade'
+topic_bomba = b'edson/bomba'
 
-# Limite para definir solo seco (abaixo) ou úmido (acima)
-LIMITE_UMIDADE = 2000  # ajuste conforme necessário
+sensor_umidade = ADC(Pin(34))
+sensor_umidade.atten(ADC.ATTN_11DB)  
+
+bomba = Pin(2, Pin.OUT)  
+
+print('Conectando no Wi-Fi...')
+wifi = network.WLAN(network.STA_IF)
+wifi.active(True)
+wifi.connect(ssid, password)
+
+while not wifi.isconnected():
+    print('.', end='')
+    time.sleep(0.5)
+
+print('\nConectado no Wi-Fi:', wifi.ifconfig())
+
+print('Conectando ao broker MQTT...')
+client = MQTTClient(client_id, mqtt_server, port=mqtt_port)
+client.connect()
+print('Conectado no MQTT broker')
+
 
 while True:
-    umidade = sensor.read()
-    print("\n=============================")
-    print(f"Umidade lida: {umidade}")
+    leitura = sensor_umidade.read()
+    umidade = 100 - int((leitura / 4095) * 100)  
 
-    if umidade < LIMITE_UMIDADE:
-        print("Status: SOLO SECO")
-        print("Bomba: LIGADA")
-        rele.value(1)  # Liga o relé
-        np[0] = (255, 0, 0)  # Vermelho
+    print('Umidade do solo:', umidade, '%')
+
+    client.publish(topic_umidade, str(umidade))
+    print('Publicado no tópico', topic_umidade)
+
+    
+    if umidade < 30:
+        bomba.value(1)  
+        client.publish(topic_bomba, 'Bomba ligada')
+        print('Bomba ligada')
     else:
-        print("Status: SOLO ÚMIDO")
-        print("Bomba: DESLIGADA")
-        rele.value(0)  # Desliga o relé
-        np[0] = (0, 255, 0)  # Verde
+        bomba.value(0)  
+        client.publish(topic_bomba, 'Bomba desligada')
+        print('Bomba desligada')
 
-    np.write()
-    sleep(2)
+    time.sleep(5)
